@@ -56,7 +56,7 @@ backups. You can optionally specify a server name to be included in the backup
 filename. ::
 
   Usage: ./manage.py dbbackup [options]
-  
+
   Options:
     --noinput             Tells Django to NOT prompt the user for input of any
                           kind.
@@ -84,7 +84,7 @@ different server. You may also specify an explicit local file to backup from.
 ::
 
   Usage: ./manage.py dbrestore [options]
-  
+
   Options:
     --noinput             Tells Django to NOT prompt the user for input of any
                           kind.
@@ -108,7 +108,7 @@ mediabackup
 Backup media files by get them one by one, include in a TAR file. ::
 
   Usage: ./manage.py mediabackup [options]
-  
+
   Options:
     --noinput             Tells Django to NOT prompt the user for input of any
                           kind.
@@ -118,6 +118,10 @@ Backup media files by get them one by one, include in a TAR file. ::
                           Specify server name to include in backup filename
     -z, --compress        Compress the archive
     -e, --encrypt         Encrypt the backup files
+    -E EXCLUDE, --exclude EXCLUDE
+                          Specify files to exclude from media backup. You can
+                          use Unix shell-style wildcards, e.g.
+                          'path_to_exclude/*' or '*.jpg'
     -o OUTPUT_FILENAME, --output-filename=OUTPUT_FILENAME
                           Specify filename on storage
     -O OUTPUT_PATH, --output-path=OUTPUT_PATH
@@ -129,7 +133,7 @@ mediarestore
 Restore media files from storage backup to your media storage. ::
 
   Usage: ./manage.py mediarestore [options]
-  
+
   Options:
     --noinput             Tells Django to NOT prompt the user for input of any
                           kind.
