@@ -74,7 +74,25 @@ class Storage(object):
         self.logger.debug('Deleting file %s', filepath)
         self.storage.delete(name=filepath)
 
+    def _dropbox_list_directory(self, path=''):
+        # Dropbox directory listing workaround
+        from dropbox.files import FileMetadata
+
+        files = []
+        full_path = self.storage._full_path(path) if path else ''
+        metadata = self.storage.client.files_list_folder(full_path)
+        for entry in metadata.entries:
+            entry.path_lower = entry.path_lower.replace(full_path, '', 1)
+            entry.path_lower = entry.path_lower.replace('/', '', 1)
+            if isinstance(entry, FileMetadata):
+                files.append(entry.path_lower)
+        return files
+
     def list_directory(self, path=''):
+        # Dropbox storage workaround
+        if self._storage_path == "storages.backends.dropbox.DropBoxStorage":
+            return self._dropbox_list_directory(path)
+
         return self.storage.listdir(path)[1]
 
     def write_file(self, filehandle, filename):
